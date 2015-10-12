@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^details/(?P<question_id>[0-9]+)$', views.details ),
     url(r'^list/$', views.list, name='list'),
 #     url(r'^lists/', views.list, name='index'),
-]
+] 
 # name='detail'
 # (?P<question_id>[0-9]+)/$
 

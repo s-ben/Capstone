@@ -10,7 +10,9 @@ class User(models.Model):
 
 class Audio(models.Model):
     user = models.ForeignKey(User)
-    file = models.FileField()  # by default uploads to MEDIA_ROOT path in settings.py
+    file = models.FileField() 
+    # filename = models.CharField(max_length=128)
+     # by default uploads to MEDIA_ROOT path in settings.py
 #     choice_text = models.CharField(max_length=200)
 #     votes = models.IntegerField(default=0)
 
