@@ -57,8 +57,8 @@ def index(request):
             newdoc.save()
             newdoc2.save()
             
-            subtract_audio.subtract(newdoc, newdoc2)
-            # subtract_audio.subtract.delay(newdoc, newdoc2)
+            # subtract_audio.subtract(newdoc, newdoc2)
+            subtract_audio.subtract.delay(newdoc, newdoc2)
             
             # print newdoc.
             # newdoc_wav_path = newdoc.file 
