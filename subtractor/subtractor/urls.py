@@ -20,6 +20,7 @@ urlpatterns = [
 	url(r'^$', include('audio_process.urls')), # DELETE ONE PATH FOR AUDIO PROCESS
 	url(r'^audio_process/', include('audio_process.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^django-rq/', include('django_rq.urls')) #PUT IN AUDIO_PROCESS AS WELL?
 ]
 
 # 

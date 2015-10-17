@@ -10,11 +10,11 @@
 
       <div class="starter-template-subtractor">
         <!-- <h1>Music Remover</h1> -->
-        <p class="lead">Music Remover attempts to remove music embedded in audio files. Simply upload your  audio along with an copy of the original music you want to remove (wav, mp2, AAC, or OOG), and we’ll do the rest!</p>
+        <p class="lead">Music Remover attempts to remove music embedded in audio files. Simply upload your  audio file along with an copy of the original music you want to remove (wav, mp2, AAC, or OOG), and we’ll do the rest!</p>
       
         
         <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url "list" %}" method="post" enctype="multipart/form-data">
+        <form action="{% url "index" %}" method="post" enctype="multipart/form-data">
           <!-- <label for="form">Your audio files </label> -->
           {% csrf_token %}
           <p>{{ form.non_field_errors }}</p>

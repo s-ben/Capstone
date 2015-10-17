@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'audio_process',
     'bootstrap3',
+     'django_rq',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -108,3 +109,32 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        # 'PASSWORD': 'some-password',
+        'DEFAULT_TIMEOUT': 360,
+    },
+    'high': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    }
+}
+
+# if DEBUG or TESTING:
+#     for queueConfig in RQ_QUEUES.itervalues():
+#         queueConfig['ASYNC'] = False
+
+
+# CHANGE FOR PRODUCTION!
+# SECRET_KEY = 'v5i%t-2)!&uateyb7jzml%k8@fgo4fxgb#2@1!7gmce40%yc@&'
+
