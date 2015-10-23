@@ -43,6 +43,9 @@ def details(request, question_id):
 #     # context = {'latest_question_list': latest_question_list}
 #     return render(request, 'audio_process/index.html', context)
 
+def download(request):
+    return render(request,'download.html', {})    
+
 def index(request):
     # Handle file upload
     if request.method == 'POST':

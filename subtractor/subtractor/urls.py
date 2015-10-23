@@ -15,13 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 	url(r'^$', include('audio_process.urls')), # DELETE ONE PATH FOR AUDIO PROCESS
 	url(r'^audio_process/', include('audio_process.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^django-rq/', include('django_rq.urls')) #PUT IN AUDIO_PROCESS AS WELL?
-]
+] 
+if settings.DEBUG:
+    urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # 
 # from django.conf.urls import include, url
