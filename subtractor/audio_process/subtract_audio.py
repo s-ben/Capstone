@@ -28,9 +28,10 @@ import room_simulate
 
 
 from django_rq import job
+from django.core.files import File
 
 @job
-def subtract(newdoc, newdoc2):
+def subtract(newdoc, newdoc2, current_user):
 
 
     # newdoc_wav_path = newdoc.file 
@@ -80,10 +81,13 @@ def subtract(newdoc, newdoc2):
     print output_filename
 
     output_path = os.path.join(settings.MEDIA_ROOT,output_filename+'_SUBTRACTED.wav')
-
-
     # output_path = os.path.join(settings.MEDIA_ROOT, ['/Ghosts_TEST2.wav'] )
     write(output_path , 44100, scaled_e)
 
+    f = open(output_path)
+    output_file = File(f)
+
+    newdoc3 = Audio(user = current_user, file = output_file)
+    newdoc3.save()
 	
     return e

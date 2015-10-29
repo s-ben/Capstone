@@ -29,22 +29,44 @@ import subtract_audio
 
 from django_rq import job 
 
-# def index(request):
-#     return HttpResponse("Hello, world. You're at the polls index.")
-    
-def details(request, question_id):
-    context = {'question_id': question_id}
-    return render(request, 'audio_process/index.html', context)
 
-#     return HttpResponse("You're looking at question %s." % question_id)
-    
-# def index(request):
-#     # latest_question_list = Question.objects.order_by('-pub_date')[:5]
-#     # context = {'latest_question_list': latest_question_list}
-#     return render(request, 'audio_process/index.html', context)
 
 def download(request):
-    return render(request,'download.html', {})    
+
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            current_user = User()       # create new user
+            current_user.save()
+    #           print current_user.id
+            newdoc = Audio(user = current_user, file = request.FILES['docfile'])
+            newdoc2 = Audio(user = current_user, file = request.FILES['docfile2'])
+
+            newdoc.save()
+            newdoc2.save()
+
+                
+            # subtract_audio.subtract(newdoc, newdoc2)
+            # subtract_audio.subtract.delay(newdoc, newdoc2)
+            subtract_audio.subtract.delay(newdoc, newdoc2, current_user)
+                
+            # return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('download'))
+    else:
+        form = DocumentForm() # A empty, unbound form
+
+        
+        # Load documents for the list page
+    #     documents = Document.objects.all()
+        documents = Audio.objects.all()
+        context = {'documents': documents, 'form': form}
+    #     context = {'documents': documents}
+
+        # Render list page with the documents and the form
+        # return render(request,'index.html', context)
+
+        return render(request,'download.html', context)  
+        output_url = os.path.join(settings.MEDIA_ROOT, raw_audio_filename)  
 
 def index(request):
     # Handle file upload
@@ -59,9 +81,11 @@ def index(request):
 
             newdoc.save()
             newdoc2.save()
+
             
             # subtract_audio.subtract(newdoc, newdoc2)
-            subtract_audio.subtract.delay(newdoc, newdoc2)
+            # subtract_audio.subtract.delay(newdoc, newdoc2)
+            subtract_audio.subtract.delay(newdoc, newdoc2, current_user)
             
             # print newdoc.
             # newdoc_wav_path = newdoc.file 
@@ -79,7 +103,8 @@ def index(request):
             # write(output_path , 44100, scaled_d)
             
             # Redirect to the document list after POST
-        return HttpResponseRedirect(reverse('index'))
+        # return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('download'))
     else:
         form = DocumentForm() # A empty, unbound form
 

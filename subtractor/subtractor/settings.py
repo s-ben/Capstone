@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'audio_process',
     'bootstrap3',
      'django_rq',
+     'gunicorn'
 )
 
 MIDDLEWARE_CLASSES = (
